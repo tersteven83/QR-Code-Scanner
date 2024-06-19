@@ -405,7 +405,7 @@
       </packagedElement>
       <xmi:Extension extender="umbrello">
         <diagrams resolution="96">
-          <diagram xmi.id="uveG1v0jldgxY" name="entity relationship diagram" type="9" documentation="" backgroundcolor="#ffffff" fillcolor="#ffffc0" font="Noto Sans,8,-1,5,50,0,0,0,0,0" griddotcolor="#d3d3d3" linecolor="#990000" linewidth="0" textcolor="#000000" usefillcolor="1" showattribassocs="1" showatts="1" showattsig="1" showops="1" showopsig="1" showpackage="1" showpubliconly="0" showscope="1" showstereotype="2" localid="-1" showgrid="0" snapgrid="0" snapcsgrid="0" snapx="25" snapy="25" zoom="107.613" canvasheight="800" canvaswidth="1100" isopen="1">
+          <diagram xmi.id="uveG1v0jldgxY" name="entity relationship diagram" type="9" documentation="" backgroundcolor="#ffffff" fillcolor="#ffffc0" font="Noto Sans,8,-1,5,50,0,0,0,0,0" griddotcolor="#d3d3d3" linecolor="#990000" linewidth="0" textcolor="#000000" usefillcolor="1" showattribassocs="1" showatts="1" showattsig="1" showops="1" showopsig="1" showpackage="1" showpubliconly="0" showscope="1" showstereotype="2" localid="-1" showgrid="0" snapgrid="0" snapcsgrid="0" snapx="25" snapy="25" zoom="123.755" canvasheight="800" canvaswidth="1100" isopen="1">
             <widgets>
               <entitywidget xmi.id="uh3akRrMc3bXB" localid="uEewq2BlESxKc" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" usesdiagramusefillcolor="0" fillcolor="#ffffc0" font="Noto Sans,8,-1,5,50,0,0,0,0,0,Regular" autoresize="1" x="509" y="290" width="77" height="110" isinstance="0" showstereotype="2" showattsigs="0"/>
               <entitywidget xmi.id="uEmwFyX0FAo8s" localid="um6HuiH8ns87t" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" usesdiagramusefillcolor="0" fillcolor="#ffffc0" font="Noto Sans,8,-1,5,50,0,0,0,0,0,Regular" autoresize="1" x="699" y="104" width="85" height="80" isinstance="0" showstereotype="2" showattsigs="0"/>
@@ -420,12 +420,12 @@
     </packagedElement>
   </uml:Model>
   <xmi:Extension extender="umbrello">
-    <docsettings viewid="uveG1v0jldgxY" documentation="" uniqueid="u2st3wttKtumK"/>
+    <docsettings viewid="uLYeupHNZQ3Hj" documentation="" uniqueid="uWiqb552BuwoK"/>
     <listview>
       <listitem id="Views" type="800" open="1">
         <listitem id="Component_View" type="821" open="1"/>
         <listitem id="Deployment_View" type="827" open="1"/>
-        <listitem id="Entity_Relationship_Model" type="836" open="1">
+        <listitem id="Entity_Relationship_Model" type="836" open="0">
           <listitem id="uveG1v0jldgxY" type="834" label="entity relationship diagram" open="0"/>
           <listitem id="umdTOac4n2054" type="832" open="1">
             <listitem id="uaj5RjLojlKO4" type="833" open="0"/>
@@ -467,10 +467,7 @@
         <listitem id="Logical_View" type="801" open="1">
           <listitem id="ublorwgjgbxyb" type="807" label="class diagram" open="0"/>
           <listitem id="Datatypes" type="830" open="0">
-            <listitem id="uxDsJmshUmnPu" type="829" open="0"/>
             <listitem id="ulcjiZ6GiZUA3" type="829" open="0"/>
-            <listitem id="uOUfHWPzz5xRX" type="829" open="0"/>
-            <listitem id="uwPE1BCiEhabQ" type="829" open="0"/>
             <listitem id="uRpap9JWv4lC5" type="829" open="0"/>
             <listitem id="uWgr5AqOQSo5H" type="829" open="0"/>
             <listitem id="uKFY5H2SIwfXL" type="829" open="0"/>

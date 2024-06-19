@@ -41,8 +41,19 @@ class EtudiantCreate(EtudiantBase):
     pass
 
 
-class EtudiantUpdate(EtudiantBase):
-    pass
+class EtudiantUpdate(BaseModel):
+    # Cette classe n'inhérite pas de EtudiantBase car les attributs peuvent être null
+    nom: Union[str, None] = None
+    prenom: Union[str, None] = None
+    dob: Union[datetime, None] = None
+    cin: Union[str, None] = None
+    cin_date: Union[datetime, None] = None
+    tel: Union[str, None] = None
+    email: Union[EmailStr, None] = None
+    adresse: Union[str, None] = None
+    niveau: Union[str, None] = None
+    parcours: Union[str, None] = None
+    annee_univ: Union[str, None] = None
 
 
 class Etudiant(EtudiantBase):

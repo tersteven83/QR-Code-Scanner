@@ -31,5 +31,27 @@ async def read_etudiants(skip: int = 0, limit: int = 100, db: Session = Depends(
 async def read_etudiant(im: str, db: Session = Depends(get_db)):
     etudiant = etudiant_service.get_by_im(db, im)
     if etudiant is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Le numéro matricule n'existe pas.")
     return etudiant
+
+
+@router.post("/", response_model=schemas.Etudiant)
+async def create_etudiant(etudiant: schemas.EtudiantCreate, db: Session = Depends(get_db)):
+    #     Vérifier d'abord si l'étudiant existe déjà dans la base de donnée
+    is_present = etudiant_service.get_by_im(db=db, im=etudiant.matricule) or \
+        etudiant_service.get_by_cin(db=db, cin=etudiant.cin) # type: ignore
+    if is_present:
+        raise HTTPException(status_code=400, detail="L'étudiant existe déja.")
+
+    return etudiant_service.create(db, etudiant)
+
+
+@router.put("/{user_im}", response_model=schemas.Etudiant)
+async def update_etudiant(im: str, etudiant_to_update: schemas.EtudiantUpdate, db: Session = Depends(get_db)):
+    is_present = etudiant_service.get_by_im(db, im)
+    if not is_present:
+        raise HTTPException(status_code=404, detail="Le numéro matricule n'existe pas.")
+      
+    # effacer les clés à valeurs vides
+    etudiant_to_update_dict = etudiant_to_update.model_dump(exclude_unset=True)
+    return etudiant_service.update(db, im, etudiant_param=etudiant_to_update_dict)
