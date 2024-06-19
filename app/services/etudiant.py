@@ -4,6 +4,7 @@ from typing import Type
 
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+import json
 
 from ..helpers import models, schemas
 from ..services import qrcode as qrcode_service
@@ -34,16 +35,21 @@ def create(db: Session, etudiant: schemas.EtudiantCreate):
     return db_etudiant
 
 
-def update(db: Session, matricule: str, etudiant_param: dict):
-    db.query(models.Etudiant).filter(models.Etudiant.matricule == matricule)\
+def update(db: Session, id_etudiant: int, etudiant_param: dict):
+    db.query(models.Etudiant).filter(models.Etudiant.id == id_etudiant)\
         .update(etudiant_param)
     db.commit()
-    return get_by_im(db, matricule)
+    return get_by_id(db, id_etudiant)
 
 
-def delete(db: Session, matricule: str):
-    etudiant = get_by_im(db, matricule)
-    return db.query(etudiant).delete()
+def delete(db: Session, id_etudiant: int):
+    db.query(models.Etudiant).filter(models.Etudiant.id == id_etudiant).delete()
+    db.commit()
+    return json.dumps({"message": "Étudiant supprimé avec succès"})
+
+
+def get_by_id(db: Session, id_etudiant: int) -> models.Etudiant:
+    return db.query(models.Etudiant).filter(models.Etudiant.id == id_etudiant).first()
 
 
 def get_by_im(db: Session, im: str) -> models.Etudiant:

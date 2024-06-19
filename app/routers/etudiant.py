@@ -46,12 +46,20 @@ async def create_etudiant(etudiant: schemas.EtudiantCreate, db: Session = Depend
     return etudiant_service.create(db, etudiant)
 
 
-@router.put("/{user_im}", response_model=schemas.Etudiant)
-async def update_etudiant(im: str, etudiant_to_update: schemas.EtudiantUpdate, db: Session = Depends(get_db)):
-    is_present = etudiant_service.get_by_im(db, im)
+@router.put("/{id_etudiant}", response_model=schemas.Etudiant)
+async def update_etudiant(id_etudiant: int, etudiant_to_update: schemas.EtudiantUpdate, db: Session = Depends(get_db)):
+    is_present = etudiant_service.get_by_id(db, id_etudiant)
     if not is_present:
-        raise HTTPException(status_code=404, detail="Le numéro matricule n'existe pas.")
+        raise HTTPException(status_code=404, detail="Étudiant non enregistré.")
       
     # effacer les clés à valeurs vides
     etudiant_to_update_dict = etudiant_to_update.model_dump(exclude_unset=True)
-    return etudiant_service.update(db, im, etudiant_param=etudiant_to_update_dict)
+    return etudiant_service.update(db, id_etudiant=id_etudiant, etudiant_param=etudiant_to_update_dict)
+
+
+@router.delete("/{id_etudiant}")
+async def delete_etudiant(id_etudiant: int, db: Session = Depends(get_db)):
+    is_present = etudiant_service.get_by_id(db, id_etudiant)
+    if not is_present:
+        raise HTTPException(status_code=404, detail="Étudiant non enregistré.")
+    return etudiant_service.delete(db, id_etudiant)

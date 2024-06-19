@@ -54,6 +54,7 @@ class EtudiantUpdate(BaseModel):
     niveau: Union[str, None] = None
     parcours: Union[str, None] = None
     annee_univ: Union[str, None] = None
+    matricule: Union[str, None] = None
 
 
 class Etudiant(EtudiantBase):
