@@ -26,15 +26,16 @@ class Etudiant(Base):
     qrcode = relationship("QR_Code", back_populates="owner")
 
 
-class Operateur(Base):
-    __tablename__ = "operateurs"
+class Operator(Base):
+    __tablename__ = "Operators"
 
     id = Column(Integer, primary_key=True)
     nom = Column(String(100))
     hashed_password = Column(String(100))
-    access_token = Column(String(255))
+    refresh_token = Column(String(255), nullable=True)
+    disabled = Column(Boolean, default=False)
 
-    activites = relationship("Journal", back_populates="operateur")
+    activites = relationship("Journal", back_populates="Operator")
 
 
 class Journal(Base):
@@ -42,11 +43,11 @@ class Journal(Base):
 
     id = Column(Integer, primary_key=True)
     operation = Column(String(200))
-    id_operateur = Column(Integer, ForeignKey("operateurs.id", ondelete="CASCADE", onupdate="CASCADE"))
+    id_operator = Column(Integer, ForeignKey("Operators.id", ondelete="CASCADE", onupdate="CASCADE"))
     im_etudiant = Column(String(20), ForeignKey("etudiants.matricule", ondelete="CASCADE", onupdate="CASCADE"))
     date = Column(Date, default=datetime.now())
 
-    operateur = relationship("Operateur", back_populates="activites")
+    Operator = relationship("Operator", back_populates="activites")
     etudiant = relationship("Etudiant", back_populates="activites")
 
 

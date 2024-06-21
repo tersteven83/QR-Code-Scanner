@@ -65,25 +65,39 @@ class Etudiant(EtudiantBase):
         orm_mode = True
 
 
-class OperateurBase(BaseModel):
+class OperatorBase(BaseModel):
     nom: str
+    disabled: bool = False
+    refresh_token: Union[str, None] = None
 
 
-class OperateurCreate(OperateurBase):
-    hashed_password: str
-    access_token: str
+class OperatorCreate(OperatorBase):
+    password: str
+    
 
-
-class Operateur(OperateurBase):
+class OperatorInDB(OperatorBase):
     id: int
-
+    hashed_password: str
+    
     class Config:
         orm_mode = True
 
 
+class Operator(OperatorBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+        
+class OperatorUdpate(BaseModel):
+    nom: Union[str, None] = None
+    disabled: Union[bool, None] = None
+    refresh_token: Union[str, None] = None
+
+
 class JournalBase(BaseModel):
     operation: str
-    effectue_par: Operateur
+    effectue_par: Operator
     etudiant: Etudiant
     date: datetime
 
@@ -97,3 +111,12 @@ class Journal(JournalBase):
 
     class Config:
         orm_mode = True
+        
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    
+
+class TokenData(BaseModel):
+    op_name: str

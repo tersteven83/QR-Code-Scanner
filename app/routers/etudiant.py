@@ -1,5 +1,8 @@
+from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+
+from app.utils.auth import get_current_active_operator
 
 from ..services import etudiant as etudiant_service
 from ..helpers.database import SessionLocal
@@ -22,7 +25,8 @@ def get_db():
 
 
 @router.get("/", response_model=list[schemas.Etudiant])
-async def read_etudiants(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def read_etudiants(current_op: Annotated[schemas.Operator, Depends(get_current_active_operator)],
+                         skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     etudiants = etudiant_service.get_all(db, skip=skip, limit=limit)
     return etudiants
 
@@ -36,7 +40,8 @@ async def read_etudiant(im: str, db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=schemas.Etudiant)
-async def create_etudiant(etudiant: schemas.EtudiantCreate, db: Session = Depends(get_db)):
+async def create_etudiant(current_op: Annotated[schemas.Operator, Depends(get_current_active_operator)],
+                          etudiant: schemas.EtudiantCreate, db: Session = Depends(get_db)):
     #     Vérifier d'abord si l'étudiant existe déjà dans la base de donnée
     is_present = etudiant_service.get_by_im(db=db, im=etudiant.matricule) or \
         etudiant_service.get_by_cin(db=db, cin=etudiant.cin) # type: ignore
@@ -47,7 +52,8 @@ async def create_etudiant(etudiant: schemas.EtudiantCreate, db: Session = Depend
 
 
 @router.put("/{id_etudiant}", response_model=schemas.Etudiant)
-async def update_etudiant(id_etudiant: int, etudiant_to_update: schemas.EtudiantUpdate, db: Session = Depends(get_db)):
+async def update_etudiant(current_op: Annotated[schemas.Operator, Depends(get_current_active_operator)],
+                          id_etudiant: int, etudiant_to_update: schemas.EtudiantUpdate, db: Session = Depends(get_db)):
     is_present = etudiant_service.get_by_id(db, id_etudiant)
     if not is_present:
         raise HTTPException(status_code=404, detail="Étudiant non enregistré.")
@@ -58,7 +64,8 @@ async def update_etudiant(id_etudiant: int, etudiant_to_update: schemas.Etudiant
 
 
 @router.delete("/{id_etudiant}")
-async def delete_etudiant(id_etudiant: int, db: Session = Depends(get_db)):
+async def delete_etudiant(current_op: Annotated[schemas.Operator, Depends(get_current_active_operator)],
+                          id_etudiant: int, db: Session = Depends(get_db)):
     is_present = etudiant_service.get_by_id(db, id_etudiant)
     if not is_present:
         raise HTTPException(status_code=404, detail="Étudiant non enregistré.")
