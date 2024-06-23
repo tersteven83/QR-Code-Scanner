@@ -35,7 +35,7 @@ class Operator(Base):
     refresh_token = Column(String(255), nullable=True)
     disabled = Column(Boolean, default=False)
 
-    activites = relationship("Journal", back_populates="Operator")
+    activites = relationship("Journal", back_populates="effectue_par")
 
 
 class Journal(Base):
@@ -47,7 +47,7 @@ class Journal(Base):
     im_etudiant = Column(String(20), ForeignKey("etudiants.matricule", ondelete="CASCADE", onupdate="CASCADE"))
     date = Column(Date, default=datetime.now())
 
-    Operator = relationship("Operator", back_populates="activites")
+    effectue_par = relationship("Operator", back_populates="activites")
     etudiant = relationship("Etudiant", back_populates="activites")
 
 

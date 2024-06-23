@@ -48,7 +48,7 @@ async def create_etudiant(current_op: Annotated[schemas.Operator, Depends(get_cu
     if is_present:
         raise HTTPException(status_code=400, detail="L'étudiant existe déja.")
 
-    return etudiant_service.create(db, etudiant)
+    return etudiant_service.create(db, etudiant, current_op)
 
 
 @router.put("/{id_etudiant}", response_model=schemas.Etudiant)
@@ -60,7 +60,7 @@ async def update_etudiant(current_op: Annotated[schemas.Operator, Depends(get_cu
       
     # effacer les clés à valeurs vides
     etudiant_to_update_dict = etudiant_to_update.model_dump(exclude_unset=True)
-    return etudiant_service.update(db, id_etudiant=id_etudiant, etudiant_param=etudiant_to_update_dict)
+    return etudiant_service.update(db, id_etudiant=id_etudiant, etudiant_param=etudiant_to_update_dict, operateur=current_op)
 
 
 @router.delete("/{id_etudiant}")
@@ -69,4 +69,4 @@ async def delete_etudiant(current_op: Annotated[schemas.Operator, Depends(get_cu
     is_present = etudiant_service.get_by_id(db, id_etudiant)
     if not is_present:
         raise HTTPException(status_code=404, detail="Étudiant non enregistré.")
-    return etudiant_service.delete(db, id_etudiant)
+    return etudiant_service.delete(db, id_etudiant, operateur=current_op)

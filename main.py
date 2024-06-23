@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.helpers import models
 from app.helpers.database import engine
-from app.routers import etudiant, operator
+from app.routers import etudiant, operator, journal
 
 models.Base.metadata.create_all(engine)
 
@@ -21,6 +21,7 @@ app.add_middleware(
 
 app.include_router(operator.router)
 app.include_router(etudiant.router)
+app.include_router(journal.router)
 
 
 @app.get("/")

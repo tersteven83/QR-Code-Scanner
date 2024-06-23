@@ -97,17 +97,21 @@ class OperatorUdpate(BaseModel):
 
 class JournalBase(BaseModel):
     operation: str
-    effectue_par: Operator
-    etudiant: Etudiant
     date: datetime
 
 
 class JournalCreate(JournalBase):
-    pass
+    im_etudiant: str
+    
+
+class JournalToDB(JournalCreate):
+    id_operator: int
 
 
 class Journal(JournalBase):
     id: int
+    effectue_par: Operator
+    etudiant: Union[Etudiant, str] = "Etudiant indisponible"
 
     class Config:
         orm_mode = True

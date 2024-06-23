@@ -1,4 +1,5 @@
 
+import json
 from sqlalchemy.orm import Session
 
 from app.helpers import models
@@ -31,3 +32,13 @@ def update(db: Session, id_operator: int, data_to_update: dict):
 
 def get_by_id(db: Session, id_operator: int):
     return db.query(models.Operator).filter(models.Operator.id == id_operator).first()
+
+
+def delete(db: Session, id_operator: int):
+    db.query(models.Operator).filter(models.Operator.id == id_operator).delete()
+    db.commit()
+    return json.dumps({"message": "Opérateur supprimé avec succès"})
+
+
+def get_operators(db: Session):
+    return db.query(models.Operator).all()
